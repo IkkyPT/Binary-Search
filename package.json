@@ -1,8 +1,8 @@
 {
-  "name": "LinkedLists",
+  "name": "Binary Search",
   "version": "1.0.0",
   "description": "",
-  "main": "linkedList.js",
+  "main": "binarySearch.js",
   "scripts": {
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
