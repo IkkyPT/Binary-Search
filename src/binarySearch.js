@@ -171,6 +171,23 @@ class Tree {
         if(!traverse(callback)) return result;
     }
 
+    // Returns the height of the given node
+    height(node = this.root) {
+        if (node === null) return -1;
+        const leftHeight = this.height(node.left);
+        const rightHeight = this.height(node.right);
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    // Returns the depth of the given node
+    depth(node, root = this.root, level = 0) {
+        if (!node) return null;
+        if (root === null) return 0;
+        if (root.data === node.data) return level;
+        const count = this.depth(node, root.left, level + 1);
+        if(count !== 0) return count;
+        return this.depth(node, root.right, level + 1);
+    }
 
     // Print the tree in a readable format (preorder)
     prettyPrint(node = this.root, prefix = "", isLeft = true) {
@@ -201,3 +218,5 @@ console.log(myTree.levelOrder());
 console.log(myTree.inOrder(myTree.root));
 console.log(myTree.preOrder(myTree.root));
 console.log(myTree.postOrder(myTree.root));
+console.log(myTree.height(myTree.find(8, myTree.root)));
+console.log(myTree.depth(myTree.find(7, myTree.root)));
