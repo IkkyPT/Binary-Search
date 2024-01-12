@@ -1,10 +1,12 @@
 import Node from "./node";
 
 class Tree {
+    // Constructor initializes the tree with a sorted array, removing duplicates
     constructor(array) {
-        this.root = this.buildTree(this.removeDuplicate(array)); // Sort the array by deleting duplicates element
+        this.root = this.buildTree(this.removeDuplicate(array).sort((a, b) => a - b)); // Sort the array by deleting duplicates element
     }
 
+    // Recursive function to build a balanced binary search tree
     buildTree(array) {
         if (array.length === 0) {
             return null;
@@ -21,7 +23,109 @@ class Tree {
         return root;
     }
 
-    // Print the preorder three
+    // Recursive function to insert a value into the tree
+    insert(value, node) {
+        if (node === null) {
+            return new Node(value);
+        }
+
+        if (node.data < value) {
+            node.right = this.insert(value, node.right);
+        } else {
+            node.left = this.insert(value, node.left);
+        }
+
+        return node;
+    }
+
+    // Recursive function to delete a node with a specific value from the tree
+    delete(value, node = this.root) {
+        if (node === null) {
+            return node;
+        }
+
+        // Recursive calls for ancestors of node to be deleted
+        if (node.data > value) {
+            node.left = this.delete(value, node.left);
+            return node;
+        } if (node.data < value) {
+            node.right = this.delete(value, node.right);
+            return node;
+        }
+
+        // If one of the children is empty
+        if (node.left === null) {
+            return node.right;
+        } if (node.right === null) {
+            return node.left;
+        }
+
+        // If both children exist
+        let succParent = node;
+
+        // Find successor
+        let succ = node.right;
+        while (succ.left !== null) {
+            succParent = succ;
+            succ = succ.left;
+        }
+
+        if (succParent !== node) {
+            succParent.left = succ.right;
+        } else {
+            succParent.right = succ.right;
+        }
+
+        // Copy Successor Data to root
+        node.data = succ.data;
+
+        // Delete Successor and return root
+        succ = null;
+        return node;
+    }
+
+    // Recursive function to find a node with a specific value in the tree
+    find(value, node) {
+        if (node === null) {
+            return null;
+        }
+        if (node.data !== value) {
+            return node.data < value
+                ? this.find(value, node.right)
+                : this.find(value, node.left);
+        }
+        return node;
+    }
+
+    // Traverse the tree in level order and execute a callback function on each node
+    levelOrder(callback) {
+        if (!this.root) return [];
+
+        const queue = [this.root];
+        const result = [];
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+
+            if (callback) {
+                callback(current);
+            } else {
+                result.push(current.data);
+            }
+
+            if (current.left) {
+                queue.push(current.left);
+            }
+
+            if (current.right) {
+                queue.push(current.right);
+            }
+        }
+
+        return callback ? undefined : result;
+    }
+
+    // Print the tree in a readable format (preorder)
     prettyPrint(node = this.root, prefix = "", isLeft = true) {
         if (node === null) {
             return;
@@ -35,7 +139,7 @@ class Tree {
         }
     }
 
-    // Creates a new sorted array by deleting the duplicate elements
+    // Creates a new sorted array by deleting duplicate elements
     removeDuplicate(array) {
         return array.filter((item, index) => array.indexOf(item) === index);
     }
@@ -45,3 +149,5 @@ class Tree {
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(myTree.root);
 myTree.prettyPrint();
+console.log(myTree.find(7, myTree.root));
+console.log(myTree.levelOrder());
