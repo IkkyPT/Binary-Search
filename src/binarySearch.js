@@ -125,6 +125,53 @@ class Tree {
         return callback ? undefined : result;
     }
 
+
+    // inorder 
+    inOrder(callback) {
+        const result = [];
+
+        function traverse(callback){
+            if(callback) {
+                traverse(callback.left);
+                result.push(callback.data);
+                traverse(callback.right);
+            }
+        }
+
+        if (!traverse(callback)) return result;
+    }
+
+    // preorder
+    preOrder(callback) {
+        const result = [];
+
+        function traverse(callback){
+            if(callback){
+                result.push(callback.data);
+                traverse(callback.left);
+                traverse(callback.right);
+            }
+        }
+
+        if(!traverse(callback)) return result;
+    }
+
+    // postorder
+    postOrder(callback) {
+        const result = [];
+
+        function traverse(callback){
+            if(callback){
+                traverse(callback.left);
+                traverse(callback.right);
+                result.push(callback.data);
+            }
+        }
+
+        if(!traverse(callback)) return result;
+    }
+
+
     // Print the tree in a readable format (preorder)
     prettyPrint(node = this.root, prefix = "", isLeft = true) {
         if (node === null) {
@@ -151,3 +198,6 @@ console.log(myTree.root);
 myTree.prettyPrint();
 console.log(myTree.find(7, myTree.root));
 console.log(myTree.levelOrder());
+console.log(myTree.inOrder(myTree.root));
+console.log(myTree.preOrder(myTree.root));
+console.log(myTree.postOrder(myTree.root));
