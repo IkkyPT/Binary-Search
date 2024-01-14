@@ -189,6 +189,16 @@ class Tree {
         return this.depth(node, root.right, level + 1);
     }
 
+    // Checks if the tree is inbalanced 
+    isBalanced(root = this.root) {
+        const leftH = this.height(root.left);
+        const rightH = this.height(root.right);
+        const dif = Math.abs(leftH - rightH);
+
+        if (dif <= 1) return true;
+        return false;
+    }
+
     // Print the tree in a readable format (preorder)
     prettyPrint(node = this.root, prefix = "", isLeft = true) {
         if (node === null) {
@@ -220,3 +230,9 @@ console.log(myTree.preOrder(myTree.root));
 console.log(myTree.postOrder(myTree.root));
 console.log(myTree.height(myTree.find(8, myTree.root)));
 console.log(myTree.depth(myTree.find(7, myTree.root)));
+myTree.insert(30, myTree.root);
+myTree.insert(27, myTree.root);
+myTree.insert(24, myTree.root);
+console.log(myTree.isBalanced());
+
+
