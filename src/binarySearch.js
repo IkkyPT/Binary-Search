@@ -229,23 +229,6 @@ class Tree {
     }
 }
 
-// Usage
-const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(myTree.root);
-myTree.prettyPrint();
-console.log(myTree.find(7, myTree.root));
-console.log(myTree.levelOrder());
-console.log(myTree.inOrder(myTree.root));
-console.log(myTree.preOrder(myTree.root));
-console.log(myTree.postOrder(myTree.root));
-console.log(myTree.height(myTree.find(8, myTree.root)));
-console.log(myTree.depth(myTree.find(7, myTree.root)));
-myTree.insert(30, myTree.root);
-myTree.insert(27, myTree.root);
-myTree.insert(24, myTree.root);
-console.log(myTree.isBalanced());
-console.log(myTree.inOrder(myTree.root));
-console.log(myTree.rebalance());
-myTree.prettyPrint();
+export default Tree;
 
 

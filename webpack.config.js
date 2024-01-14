@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  entry: './src/binarySearch.js',
+  entry: './src/drive.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
