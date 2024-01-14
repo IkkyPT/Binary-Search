@@ -189,7 +189,7 @@ class Tree {
         return this.depth(node, root.right, level + 1);
     }
 
-    // Checks if the tree is inbalanced 
+    // Checks if the tree is balanced 
     isBalanced(root = this.root) {
         const leftH = this.height(root.left);
         const rightH = this.height(root.right);
@@ -197,6 +197,16 @@ class Tree {
 
         if (dif <= 1) return true;
         return false;
+    }
+
+    // Rebalance the inbalanced tree
+    rebalance() {
+        const sorted = (this.removeDuplicate(this.inOrder(this.root)).sort((a, b) => a - b));
+        if (this.isBalanced() === false) {
+            this.root = this.buildTree(sorted);
+            return "Tree is balanced!"
+        }
+        return "Tree is already balanced!"
     }
 
     // Print the tree in a readable format (preorder)
@@ -234,5 +244,8 @@ myTree.insert(30, myTree.root);
 myTree.insert(27, myTree.root);
 myTree.insert(24, myTree.root);
 console.log(myTree.isBalanced());
+console.log(myTree.inOrder(myTree.root));
+console.log(myTree.rebalance());
+myTree.prettyPrint();
 
 
